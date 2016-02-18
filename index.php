@@ -34,8 +34,8 @@ $SMTPmail = FALSE;
 if(isset($_POST['submit'])):
     if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])):
 	
-		//Set here your GOOGLE RECAPTCHA2 SECRET KEY
-		$secret = 'GOOGLE RECAPTCHA2 SECRET KEY';
+			//Set here your GOOGLE RECAPTCHA2 SECRET KEY
+			$secret = 'GOOGLE RECAPTCHA2 SECRET KEY';
 		
 		//Verify the recaptcha
         $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
@@ -183,8 +183,8 @@ if(isset($_POST['submit'])):
         $errMsg = 'Check the reCAPTCHA box for anti-spam verification.';
     endif;
 else:
-    $errMsg = '';
-    $succMsg = '';
+	$errMsg = '';
+	$succMsg = '';
 	$name = '';
 	$adres = '';
 	$phone = '';
@@ -196,113 +196,117 @@ endif;
 
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset="UTF-8">
-	<title>Website title</title>
-	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<meta name="keywords" content="keyword,keyword,keyword,keyword">
-	<meta name="description" content="Site description">
-	<meta name="author" content="Sven Kortekaas - https://skortekaas.nl/">
-	<link href="css/style.css" rel="stylesheet">
-	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <meta charset="UTF-8">
+    <title>Website title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="keywords" content="keyword,keyword,keyword,keyword">
+    <meta name="description" content="Site description">
+    <meta name="author" content="Sven Kortekaas - https://skortekaas.nl/">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body>
-	
-	<div class="wrapper">
-		<div id="main" style="padding:50px 0 0 0;">	
-		<!-- Form -->
-		<form id="contact-form" action="" method="POST">
-		<h4><?php if(!empty($errMsg)): ?><div class="errMsg"><?php echo $errMsg; ?></div><?php endif; ?></h4>
-        <h4><?php if(!empty($succMsg)): ?><div class="succMsg"><?php echo $succMsg; ?></div><?php endif; ?></h4>	
-			<h3>Title</h3>
-			<h4>Subtitle text.</h4>
-			<div>
-				<label>
-					<span>Name: (required)</span>
-					<input name="name" placeholder="Full name" type="text" tabindex="1" required autofocus>
-				</label>
-			</div>
-			<div>
-				<label>
-					<span>Adress:</span>
-					<input name="adres" placeholder="Your adress" type="text" tabindex="2">
-				</label>
-			</div>
-			<div>
-				<label>
-					<span>Email: (required)</span>
-					<input name="email" placeholder="Your email" type="email" tabindex="3" required>
-				</label>
-			</div>
-			<div>
-				<label>
-					<span>Website:</span>
-					<input name="website" placeholder="http://www.yourwebsite.tld" type="url" tabindex="4">
-				</label>
-			</div>
-			<div>
-				<label>
-					<span>Telephonenumber:</span>
-					<input name="phone" placeholder="Your telephonenumber" type="tel" tabindex="5">
-				</label>
-			</div>
-			<div>
-				<label>
-					<span>Message:</span>
-					<textarea name="message" placeholder="Your message" tabindex="6"></textarea>
-				</label>
-			</div>
-			<div class="g-recaptcha" data-sitekey="GOOGLE RECAPTCHA2 WEBSITE KEY"></div>
-			<div>
-				<br><button name="submit" type="submit" id="contact-submit">Send Email</button>
-			</div>
-			<p><strong>Credits:</strong><br>
-				Contact form by <a href="https://skortekaas.nl">Sven Kortekaas</a></span></p>
-		</form>
-		<!-- /Form -->
-		
-		</div>
-	</div>
 
-	<script>
-		(function() {
+    <div class="wrapper">
+        <div id="main" style="padding:50px 0 0 0;">
+            <!-- Form -->
+            <form id="contact-form" action="" method="POST">
+                <h4><?php if(!empty($errMsg)): ?><div class="errMsg"><?php echo $errMsg; ?></div><?php endif; ?></h4>
+                <h4><?php if(!empty($succMsg)): ?><div class="succMsg"><?php echo $succMsg; ?></div><?php endif; ?></h4>
+                <h3>Title</h3>
+                <h4>Subtitle text.</h4>
+                <div>
+                    <label>
+                        <span>Name: (required)</span>
+                        <input name="name" placeholder="Full name" type="text" tabindex="1" required autofocus>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <span>Adress:</span>
+                        <input name="adres" placeholder="Your adress" type="text" tabindex="2">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <span>Email: (required)</span>
+                        <input name="email" placeholder="Your email" type="email" tabindex="3" required>
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <span>Website:</span>
+                        <input name="website" placeholder="http://www.yourwebsite.tld" type="url" tabindex="4">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <span>Telephonenumber:</span>
+                        <input name="phone" placeholder="Your telephonenumber" type="tel" tabindex="5">
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <span>Message:</span>
+                        <textarea name="message" placeholder="Your message" tabindex="6"></textarea>
+                    </label>
+                </div>
+                <div class="g-recaptcha" data-sitekey="GOOGLE RECAPTCHA2 WEBSITE KEY"></div>
+                <div>
+                    <br>
+                    <button name="submit" type="submit" id="contact-submit">Send Email</button>
+                </div>
+                <p><strong>Credits:</strong>
+                    <br> Contact form by <a href="https://skortekaas.nl">Sven Kortekaas</a>
+                </p>
+            </form>
+            <!-- /Form -->
 
-			// Create input element for testing
-			var inputs = document.createElement('input');
-			
-			// Create the supports object
-			var supports = {};
-			
-			supports.autofocus   = 'autofocus' in inputs;
-			supports.required    = 'required' in inputs;
-			supports.placeholder = 'placeholder' in inputs;
+        </div>
+    </div>
 
-			// Fallback for autofocus attribute
-			if(!supports.autofocus) {
-				
-			}
-			
-			// Fallback for required attribute
-			if(!supports.required) {
-				
-			}
+    <script>
+        (function() {
 
-			// Fallback for placeholder attribute
-			if(!supports.placeholder) {
-				
-			}
-			
-			// Change text inside send button on submit
-			var send = document.getElementById('contact-submit');
-			if(send) {
-				send.onclick = function () {
-					this.innerHTML = '...Sending';
-				}
-			}
+            // Create input element for testing
+            var inputs = document.createElement('input');
 
-		})();
-	</script>
-	
+            // Create the supports object
+            var supports = {};
+
+            supports.autofocus = 'autofocus' in inputs;
+            supports.required = 'required' in inputs;
+            supports.placeholder = 'placeholder' in inputs;
+
+            // Fallback for autofocus attribute
+            if (!supports.autofocus) {
+
+            }
+
+            // Fallback for required attribute
+            if (!supports.required) {
+
+            }
+
+            // Fallback for placeholder attribute
+            if (!supports.placeholder) {
+
+            }
+
+            // Change text inside send button on submit
+            var send = document.getElementById('contact-submit');
+            if (send) {
+                send.onclick = function() {
+                    this.innerHTML = '...Sending';
+                }
+            }
+
+        })();
+    </script>
+
 </body>
+
 </html>
