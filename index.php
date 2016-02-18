@@ -34,147 +34,147 @@ $SMTPmail = FALSE;
 if(isset($_POST['submit'])):
     if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])):
 	
-			//Set here your GOOGLE RECAPTCHA2 SECRET KEY
-			$secret = 'GOOGLE RECAPTCHA2 SECRET KEY';
+		//Set here your GOOGLE RECAPTCHA2 SECRET KEY
+		$secret = 'GOOGLE RECAPTCHA2 SECRET KEY';
 		
-		//Verify the recaptcha
+	//Verify the recaptcha
         $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
         $responseData = json_decode($verifyResponse);
 		
-		//Getting all the values
-		$name = !empty($_POST['name'])?$_POST['name']:'';
-		$adres = !empty($_POST['adres'])?$_POST['adres']:'';
-		$phone = !empty($_POST['phone'])?$_POST['phone']:'';
-		$message = !empty($_POST['message'])?$_POST['message']:'';
-		$email = !empty($_POST['email'])?$_POST['email']:'';
-		$website = !empty($_POST['website'])?$_POST['website']:'';
-		
-		//The email content
-		$htmlContent = "
-			<h1>Email body title</h1>
-			<p><b>Name: </b>".$name."</p>
-			<p><b>Adress: </b>".$adres."</p>
-			<p><b>Email: </b>".$email."</p>
-			<p><b>Website: </b>".$website."</p>
-			<p><b>Telephonenumber: </b>".$phone."</p>
-			<p><b>Message: </b>".$message."</p>
-		";
-		
-		//Send the email to this adress
-		$to = 'YOUREMAIL@DOMAIN.TLD';
-		
-		//Put the email subject in here
-		$subject = 'EMAIL SUBJECT';
-		
-		//If the recaptcha verify succeeded continue
+	//Getting all the values
+	$name = !empty($_POST['name'])?$_POST['name']:'';
+	$adres = !empty($_POST['adres'])?$_POST['adres']:'';
+	$phone = !empty($_POST['phone'])?$_POST['phone']:'';
+	$message = !empty($_POST['message'])?$_POST['message']:'';
+	$email = !empty($_POST['email'])?$_POST['email']:'';
+	$website = !empty($_POST['website'])?$_POST['website']:'';
+	
+	//The email content
+	$htmlContent = "
+		<h1>Email body title</h1>
+		<p><b>Name: </b>".$name."</p>
+		<p><b>Adress: </b>".$adres."</p>
+		<p><b>Email: </b>".$email."</p>
+		<p><b>Website: </b>".$website."</p>
+		<p><b>Telephonenumber: </b>".$phone."</p>
+		<p><b>Message: </b>".$message."</p>
+	";
+	
+	//Send the email to this adress
+	$to = 'YOUREMAIL@DOMAIN.TLD';
+	
+	//Put the email subject in here
+	$subject = 'EMAIL SUBJECT';
+	
+	//If the recaptcha verify succeeded continue
         if($responseData->success):
 		
-			//If SMTPmail is TRUE
-			if($SMTPmail) {
-				
-				/*
-				* This will send the email by SMTP making use of the PHPMailer class
-				* https://github.com/phpmailer/phpmailer
-				* You need to install this on your website
-				*/
-				
-				//SMTP needs accurate times, and the PHP time zone MUST be set
-				//This should be done in your php.ini, but this is how to do it if you don't have access to that
-				date_default_timezone_set('Etc/UTC');
-				
-				//Set the right path to PHPMailerAutoload.php
-				require 'PHPMailerAutoload.php';
+		//If SMTPmail is TRUE
+		if($SMTPmail) {
 			
-				//Create a new PHPMailer instance
-				$mail = new PHPMailer;
-				
-				//Tell PHPMailer to use SMTP
-				$mail->isSMTP();
-				
-				//Enable SMTP debugging
-				// 0 = off (for production use)
-				// 1 = client messages
-				// 2 = client and server messages
-				$mail->SMTPDebug = 2;
-				
-				//Ask for HTML-friendly debug output
-				$mail->Debugoutput = 'html';
-				
-				//Set the hostname of the mail server
-				$mail->Host = "smtp.domain.tld";
-				
-				//Set the SMTP port number - likely to be 25, 465 or 587
-				$mail->Port = 25;
-				
-				//Whether to use SMTP authentication
-				$mail->SMTPAuth = true;
-				
-				//Set SSL or TLS
-				//$mail->SMTPSecure = "tls"; 
-				
-				//Username to use for SMTP authentication
-				$mail->Username = "username@domain.tld";
-				
-				//Password to use for SMTP authentication
-				$mail->Password = "password";
-				
-				//Set who the message is to be sent from
-				$mail->setFrom('username@domain.tld', $name);
-				
-				//Set who the message is to be sent to
-				$mail->addAddress($to, 'John Doe');
-				
-				//Set who the message is to be sent to in CC
-				//$mail->AddCC('email@domain.tld', 'John Doe');
-				
-				//Set the subject line
-				$mail->Subject = $subject;
-				
-				//Read an HTML message body from an external file, convert referenced images to embedded,
-				//convert HTML into a basic plain-text alternative body
-				$mail->msgHTML($htmlContent);
-				
-				//Replace the plain text body with one created manually
-				$mail->AltBody = $htmlContent;
-				
-				//send the message, check for errors
-				if (!$mail->send()) {
-					$succMsg =  "Something went wrong. Please contact your webmaster. SMTP Mailer Error: " . $mail->ErrorInfo;
-				} else {
-					$succMsg = "Mailed with succes through SMTP.";
-				}
-				
-				$name = '';
-				$adres = '';
-				$message = '';
-				$phone = '';
-				$email = '';
-				$url = '';		
+			/*
+			* This will send the email by SMTP making use of the PHPMailer class
+			* https://github.com/phpmailer/phpmailer
+			* You need to install this on your website
+			*/
 			
-			} else { //If SMTPmail is FALSE
-				
-				/*
-				* This will send the email with the PHP mail() function
-				*/
-				
-				$headers = "MIME-Version: 1.0" . "\r\n";
-				$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-				$headers .= 'From:'.$name.' <'.$email.'>' . "\r\n";
-				if(mail($to,$subject,$htmlContent,$headers))
-				{ 
-					$succMsg = 'Mailed with succes with PHP mail()'; 
-				} else { 
-					$succMsg = 'Something went wrong. Please contact your webmaster. PHP Mail() failed. Returned FALSE.';
-				}
-				
-				$name = '';
-				$adres = '';
-				$phone = '';
-				$message = '';
-				$email = '';
-				$url = '';
-				
-			}		
+			//SMTP needs accurate times, and the PHP time zone MUST be set
+			//This should be done in your php.ini, but this is how to do it if you don't have access to that
+			date_default_timezone_set('Etc/UTC');
+			
+			//Set the right path to PHPMailerAutoload.php
+			require 'PHPMailerAutoload.php';
+		
+			//Create a new PHPMailer instance
+			$mail = new PHPMailer;
+			
+			//Tell PHPMailer to use SMTP
+			$mail->isSMTP();
+			
+			//Enable SMTP debugging
+			// 0 = off (for production use)
+			// 1 = client messages
+			// 2 = client and server messages
+			$mail->SMTPDebug = 2;
+			
+			//Ask for HTML-friendly debug output
+			$mail->Debugoutput = 'html';
+			
+			//Set the hostname of the mail server
+			$mail->Host = "smtp.domain.tld";
+			
+			//Set the SMTP port number - likely to be 25, 465 or 587
+			$mail->Port = 25;
+			
+			//Whether to use SMTP authentication
+			$mail->SMTPAuth = true;
+			
+			//Set SSL or TLS
+			//$mail->SMTPSecure = "tls"; 
+			
+			//Username to use for SMTP authentication
+			$mail->Username = "username@domain.tld";
+			
+			//Password to use for SMTP authentication
+			$mail->Password = "password";
+			
+			//Set who the message is to be sent from
+			$mail->setFrom('username@domain.tld', $name);
+			
+			//Set who the message is to be sent to
+			$mail->addAddress($to, 'John Doe');
+			
+			//Set who the message is to be sent to in CC
+			//$mail->AddCC('email@domain.tld', 'John Doe');
+			
+			//Set the subject line
+			$mail->Subject = $subject;
+			
+			//Read an HTML message body from an external file, convert referenced images to embedded,
+			//convert HTML into a basic plain-text alternative body
+			$mail->msgHTML($htmlContent);
+			
+			//Replace the plain text body with one created manually
+			$mail->AltBody = $htmlContent;
+			
+			//send the message, check for errors
+			if (!$mail->send()) {
+				$succMsg =  "Something went wrong. Please contact your webmaster. SMTP Mailer Error: " . $mail->ErrorInfo;
+			} else {
+				$succMsg = "Mailed with succes through SMTP.";
+			}
+			
+			$name = '';
+			$adres = '';
+			$message = '';
+			$phone = '';
+			$email = '';
+			$url = '';		
+		
+		} else { //If SMTPmail is FALSE
+			
+			/*
+			* This will send the email with the PHP mail() function
+			*/
+			
+			$headers = "MIME-Version: 1.0" . "\r\n";
+			$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+			$headers .= 'From:'.$name.' <'.$email.'>' . "\r\n";
+			if(mail($to,$subject,$htmlContent,$headers))
+			{ 
+				$succMsg = 'Mailed with succes with PHP mail()'; 
+			} else { 
+				$succMsg = 'Something went wrong. Please contact your webmaster. PHP Mail() failed. Returned FALSE.';
+			}
+			
+			$name = '';
+			$adres = '';
+			$phone = '';
+			$message = '';
+			$email = '';
+			$url = '';
+			
+		}		
 			
         else:
             $errMsg = 'Anti-spam/Robot verification failed. Please try again.';
