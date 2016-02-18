@@ -1,11 +1,9 @@
-[![Code Climate](https://codeclimate.com/github/SvenKortekaas/PHP-SMTP-ContactForm/badges/gpa.svg)](https://codeclimate.com/github/SvenKortekaas/PHP-SMTP-ContactForm) [![Issue Count](https://codeclimate.com/github/SvenKortekaas/PHP-SMTP-ContactForm/badges/issue_count.svg)](https://codeclimate.com/github/SvenKortekaas/PHP-SMTP-ContactForm)
-
-# PHP-SMTP-ContactForm
+# PHP-SMTP-ContactForm [![Code Climate](https://codeclimate.com/github/SvenKortekaas/PHP-SMTP-ContactForm/badges/gpa.svg)](https://codeclimate.com/github/SvenKortekaas/PHP-SMTP-ContactForm) [![Issue Count](https://codeclimate.com/github/SvenKortekaas/PHP-SMTP-ContactForm/badges/issue_count.svg)](https://codeclimate.com/github/SvenKortekaas/PHP-SMTP-ContactForm)
 It is a fully responsive HTML5 - JavaScript contact form. It can send emails with the PHP mail() function or through a SMTP server by making use of the PHPMailer class (https://github.com/phpmailer/phpmailer)<br>
 <br><br>
 Besides that it also has a built-in anti-spam control. It uses the reCAPTCHA from Google (https://www.google.com/recaptcha/intro/index.html)<br>
 
-# Install
+## Install
 For the reCAPTCHA you need to have a site-key and a secret key and fill it in on index.php at the right place.
 <br>
 For the secret look for this code:<br>
@@ -32,7 +30,25 @@ $SMTPmail = FALSE;
 <br><br>
 You can also change the color scheme in the CSS and add more or less fields in the form in index.php. That is up to you.
 
-# Contact
+## License
+Copyright 2016 Sven Kortekaas
+
+This file is part of PHP-SMTP-ContactForm.
+ 
+PHP-SMTP-ContactForm is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+PHP-SMTP-ContactForm is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with PHP-SMTP-ContactForm.  If not, see <http://www.gnu.org/licenses/>.
+
+## Contact
 Name: Sven Kortekaas<br>
 Website: https://skortekaas.nl/<br>
 PGP Key: E8EB 6D69 6E00 BBC2
