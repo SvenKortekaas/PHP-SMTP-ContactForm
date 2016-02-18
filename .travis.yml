@@ -7,6 +7,10 @@ php:
 - hhvm
 script: phpunit index.php
 
+before_script:
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
+
 addons:
     code_climate:
         repo_token: f507bf8bfcdd0322f927bd0697a39bd17ba4eea99ba75b78d3c07745b1c9f282
