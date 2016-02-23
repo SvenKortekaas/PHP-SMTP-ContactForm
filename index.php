@@ -30,6 +30,24 @@
 
 //Set this to TRUE for SMTP mail otherwise it will use the PHP mail() function
 $SMTPmail = FALSE; 
+//If true - don't forget to set the SMTP server credentials
+if($SMTPmail) {
+	$smtpServer = "smtp.domain.tld"; //Set the hostname of the mail server
+	$smtpPort = 25; //Set the SMTP port number - likely to be 25, 465 or 587		
+	$smtpAuth = true; //Whether to use SMTP authentication
+	//$smtpSecure = "tls"; //Set SSL or TLS
+	$smtpUsername = "username@domain.tld"; //Username to use for SMTP authentication
+	$smtpPassword = "password"; //Password to use for SMTP authentication
+}
+
+//Set PGP encryption or not
+$encryptData = FALSE;
+//If true - don't forget to enter your PGP public ARMOR key
+if($encryptData) {
+	$pgpArmorKey = '-----BEGIN PGP PUBLIC KEY BLOCK-----
+.........................
+-----END PGP PUBLIC KEY BLOCK-----';
+}
 
 if(isset($_POST['submit'])):
     if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])):
@@ -59,6 +77,21 @@ if(isset($_POST['submit'])):
 		<p><b>Telephonenumber: </b>".$phone."</p>
 		<p><b>Message: </b>".$message."</p>
 	";
+	
+	if($encryptData) {
+		
+		require_once dirname(__FILE__).'openpgp.php';
+		require_once dirname(__FILE__).'openpgp_crypt_rsa.php';
+		require_once dirname(__FILE__).'openpgp_crypt_symmetric.php';
+		
+		$key = OpenPGP_Message::parse($pgpArmorKey);
+		$data = new OpenPGP_LiteralDataPacket($htmlContent);
+		$encrypted = OpenPGP_Crypt_Symmetric::encrypt($key, new OpenPGP_Message(array($data)));
+		
+		$htmlContent = $encrypted;
+	}
+	
+	
 	
 	//Send the email to this adress
 	$to = 'YOUREMAIL@DOMAIN.TLD';
@@ -101,22 +134,22 @@ if(isset($_POST['submit'])):
 			$mail->Debugoutput = 'html';
 			
 			//Set the hostname of the mail server
-			$mail->Host = "smtp.domain.tld";
+			$mail->Host = $smtpServer;
 			
 			//Set the SMTP port number - likely to be 25, 465 or 587
-			$mail->Port = 25;
+			$mail->Port = $smtpPort;
 			
 			//Whether to use SMTP authentication
-			$mail->SMTPAuth = true;
+			$mail->SMTPAuth = $smtpAuth;
 			
 			//Set SSL or TLS
-			//$mail->SMTPSecure = "tls"; 
+			//$mail->SMTPSecure = $smtpSecure; 
 			
 			//Username to use for SMTP authentication
-			$mail->Username = "username@domain.tld";
+			$mail->Username = $smtpUsername;
 			
 			//Password to use for SMTP authentication
-			$mail->Password = "password";
+			$mail->Password = $smtpPassword;
 			
 			//Set who the message is to be sent from
 			$mail->setFrom('username@domain.tld', $name);
