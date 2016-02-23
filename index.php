@@ -40,15 +40,6 @@ if($SMTPmail) {
 	$smtpPassword = "password"; //Password to use for SMTP authentication
 }
 
-//Set PGP encryption or not
-$encryptData = FALSE;
-//If true - don't forget to enter your PGP public ARMOR key
-if($encryptData) {
-	$pgpArmorKey = '-----BEGIN PGP PUBLIC KEY BLOCK-----
-.........................
------END PGP PUBLIC KEY BLOCK-----';
-}
-
 if(isset($_POST['submit'])):
     if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])):
 	
@@ -77,21 +68,6 @@ if(isset($_POST['submit'])):
 		<p><b>Telephonenumber: </b>".$phone."</p>
 		<p><b>Message: </b>".$message."</p>
 	";
-	
-	if($encryptData) {
-		
-		require_once dirname(__FILE__).'openpgp.php';
-		require_once dirname(__FILE__).'openpgp_crypt_rsa.php';
-		require_once dirname(__FILE__).'openpgp_crypt_symmetric.php';
-		
-		$key = OpenPGP_Message::parse($pgpArmorKey);
-		$data = new OpenPGP_LiteralDataPacket($htmlContent);
-		$encrypted = OpenPGP_Crypt_Symmetric::encrypt($key, new OpenPGP_Message(array($data)));
-		
-		$htmlContent = $encrypted;
-	}
-	
-	
 	
 	//Send the email to this adress
 	$to = 'YOUREMAIL@DOMAIN.TLD';
