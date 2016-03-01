@@ -2,6 +2,8 @@
 It is a fully responsive HTML5 - JavaScript contact form. It can send emails with the PHP mail() function or through a SMTP server by making use of the PHPMailer class (https://github.com/phpmailer/phpmailer)<br>
 <br><br>
 Besides that it also has a built-in anti-spam control. It uses the reCAPTCHA from Google (https://www.google.com/recaptcha/intro/index.html)<br>
+<br><br>
+Minimal PHP Version is 5.2<br>
 
 ## Install
 For the reCAPTCHA you need to have a site-key and a secret key and fill it in on index.php at the right place.
